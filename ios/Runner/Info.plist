@@ -26,6 +26,12 @@
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>For choosing avatar picture in aplication</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>For choosing avatar picture in aplication</string>
+	<key>NSCameraUsageDescription</key>
+	<string>For choosing avatar picture in aplication</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>

@@ -4,21 +4,28 @@ import 'package:flutter/material.dart';
 class AppInput extends StatelessWidget {
   const AppInput({
     Key? key,
-    required this.textEditingController,
+    this.textEditingController,
     this.isPass = false,
     this.hintText,
     this.textInputType,
+    this.onChange,
   }) : super(key: key);
 
-  final TextEditingController textEditingController;
+  final TextEditingController? textEditingController;
   final bool isPass;
   final String? hintText;
   final TextInputType? textInputType;
+  final Function(String)? onChange;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: textEditingController,
+      onChanged: onChange != null
+          ? (value) {
+              onChange!(value);
+            }
+          : null,
       decoration: InputDecoration(
         fillColor: Colors.white,
         hintText: hintText,

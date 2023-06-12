@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:linkstagram/screen/auth_view.dart';
-import 'package:linkstagram/screen/sign_up.view.dart';
+import 'package:linkstagram/screen/auth/auth_view.dart';
+import 'package:linkstagram/screen/sign_up/sign_up_view.dart';
 import 'package:linkstagram/widgets/account_info.dart';
 import 'package:linkstagram/widgets/app_bar.dart';
 import 'package:linkstagram/widgets/app_text_button.dart';
