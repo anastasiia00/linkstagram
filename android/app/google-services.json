@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "468136851061",
+    "project_id": "linkstagram-1",
+    "storage_bucket": "linkstagram-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:468136851061:android:e34c0fd4389bd8d37d2a3c",
+        "android_client_info": {
+          "package_name": "com.example.linkstagram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "468136851061-1g6jtfig1n5vgdducdr58jc5i8e4cev3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwDPiyPYVTDF_GDS8CGl4S1CqptR7y6lQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "468136851061-1g6jtfig1n5vgdducdr58jc5i8e4cev3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
