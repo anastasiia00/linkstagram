@@ -3,7 +3,10 @@ import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:linkstagram/models/app_response.dart';
+import 'package:linkstagram/screen/home/home_view.dart';
 import 'package:linkstagram/services/auth.dart';
 
 part 'sign_up_state.dart';
@@ -59,14 +62,35 @@ class SignUpCubit extends Cubit<SignUpState> {
     );
   }
 
-  Future<void> signUp() async {
-    final Uint8List avatar = await File(state.avatarPath).readAsBytes();
-    service.signUp(
+  Future<void> signUp(BuildContext context) async {
+    emit(state.copyWith(isLoading: true));
+    Uint8List? avatar;
+    if (state.avatarPath != null) {
+      avatar = await File(state.avatarPath!).readAsBytes();
+    }
+    final AppResponse result = await service.signUp(
       email: state.email,
       password: state.password,
       name: state.name,
       username: state.username,
       file: avatar,
     );
+    if (result.success == false) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          //---- red color
+          content: Text(result.errors!),
+        ),
+      );
+    }
+    if (result.success) {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => HomeView(),
+        ),
+        (Route<dynamic> route) => false,
+      );
+    }
+    emit(state.copyWith(isLoading: false));
   }
 }

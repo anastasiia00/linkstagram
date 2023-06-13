@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linkstagram/screen/auth/auth_view.dart';
+import 'package:linkstagram/screen/home/home_view.dart';
 import 'package:linkstagram/screen/sign_up/sign_up_view.dart';
 import 'package:linkstagram/widgets/account_info.dart';
 import 'package:linkstagram/widgets/app_bar.dart';
@@ -69,6 +70,20 @@ class UiKit extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => SignUpView(),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              AppTextButton(
+                title: 'Home Screen',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomeView(),
                     ),
                   );
                 },

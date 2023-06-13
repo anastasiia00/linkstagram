@@ -11,6 +11,7 @@ class AppBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Colors.white,
       leading: const Padding(
         padding: EdgeInsets.only(
           left: 16,
@@ -37,7 +38,7 @@ class AppBarWidget extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: isProfile != true
+            child: isProfile != false
                 ? const Padding(
                     padding: EdgeInsets.symmetric(
                       vertical: 10,

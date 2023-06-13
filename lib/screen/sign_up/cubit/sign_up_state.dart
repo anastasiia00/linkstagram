@@ -7,22 +7,25 @@ class SignUpState extends Equatable {
     this.password = '',
     this.username = '',
     this.name = '',
-    this.avatarPath = '',
+    this.avatarPath,
+    this.isLoading = false,
   });
 
   final String email;
   final String password;
   final String username;
   final String name;
-  final String avatarPath;
+  final String? avatarPath;
+  final bool isLoading;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         email,
         password,
         username,
         name,
         avatarPath,
+        isLoading,
       ];
 
   SignUpState copyWith({
@@ -31,6 +34,7 @@ class SignUpState extends Equatable {
     String? username,
     String? name,
     String? avatarPath,
+    bool? isLoading,
   }) {
     return SignUpState(
       email: email ?? this.email,
@@ -38,6 +42,7 @@ class SignUpState extends Equatable {
       username: username ?? this.username,
       name: name ?? this.name,
       avatarPath: avatarPath ?? this.avatarPath,
+      isLoading: isLoading ?? this.isLoading,
     );
   }
 }

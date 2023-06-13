@@ -32,86 +32,85 @@ class _SignUpViewState extends State<SignUpView> {
       create: (context) => SignUpCubit(),
       child: BlocBuilder<SignUpCubit, SignUpState>(
         builder: (context, state) {
-          print(state.email);
           return Scaffold(
             backgroundColor: Color(0xffE5E5E5),
-            body: Center(
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Material(
-                      child: InkWell(
-                        child: AvatarSelectionWidget(
-                          onFileChanged: (value) {
-                            BlocProvider.of<SignUpCubit>(context)
-                                .avatarUpdate(value);
-                          },
-                        ),
+            body: state.isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Material(
+                            child: InkWell(
+                              child: AvatarSelectionWidget(
+                                onFileChanged: (value) {
+                                  BlocProvider.of<SignUpCubit>(context)
+                                      .avatarUpdate(value);
+                                },
+                              ),
+                            ),
+                          ),
+                          AppInput(
+                            onChange: (value) {
+                              print('AppInput SignUp email');
+                              BlocProvider.of<SignUpCubit>(context)
+                                  .emailUpdate(value);
+                            },
+                            hintText: 'E-mail',
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          AppInput(
+                            onChange: (value) {
+                              print('AppInput SignUp password');
+                              BlocProvider.of<SignUpCubit>(context)
+                                  .passwordUpdate(value);
+                            },
+                            hintText: 'Password',
+                            isPass: true,
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          AppInput(
+                            onChange: (value) {
+                              print('AppInput SignUp name');
+                              BlocProvider.of<SignUpCubit>(context)
+                                  .nameUpdate(value);
+                            },
+                            hintText: 'Name',
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          AppInput(
+                            onChange: (value) {
+                              print('AppInput SignUp username');
+                              BlocProvider.of<SignUpCubit>(context)
+                                  .usernameUpdate(value);
+                            },
+                            hintText: 'Username',
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          AppTextButton(
+                            onPressed: () {
+                              BlocProvider.of<SignUpCubit>(context)
+                                  .signUp(context);
+                            },
+                            title: 'Sign Up',
+                            buttonColor: Colors.blue,
+                          ),
+                        ],
                       ),
                     ),
-                    AppInput(
-                      onChange: (value) {
-                        print('AppInput SignUp email');
-                        BlocProvider.of<SignUpCubit>(context)
-                            .emailUpdate(value);
-                      },
-                      hintText: 'E-mail',
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    AppInput(
-                      onChange: (value) {
-                        print('AppInput SignUp password');
-                        BlocProvider.of<SignUpCubit>(context)
-                            .passwordUpdate(value);
-                      },
-                      hintText: 'Password',
-                      isPass: true,
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    AppInput(
-                      onChange: (value) {
-                        print('AppInput SignUp name');
-                        BlocProvider.of<SignUpCubit>(context).nameUpdate(value);
-                      },
-                      hintText: 'Name',
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    AppInput(
-                      onChange: (value) {
-                        print('AppInput SignUp username');
-                        BlocProvider.of<SignUpCubit>(context)
-                            .usernameUpdate(value);
-                      },
-                      hintText: 'Username',
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    AppTextButton(
-                      onPressed: () {
-                        BlocProvider.of<SignUpCubit>(context).signUp();
-                        // AuthMethods().signUp(
-                        // email: _emailController.text,
-                        // password: _passwordController.text,
-                        // name: _nameController.text,
-                        // username: _usernameController.text,
-                        // );
-                      },
-                      title: 'Sign Up',
-                      buttonColor: Colors.blue,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
           );
         },
       ),
