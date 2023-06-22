@@ -53,7 +53,7 @@ class AccountInfoWidget extends StatelessWidget {
                         ),
                       ],
                     )
-                  : SizedBox()
+                  : const SizedBox()
             ],
           ),
           const SizedBox(
@@ -69,7 +69,7 @@ class AccountInfoWidget extends StatelessWidget {
                     color: Color(0xff808080),
                   ),
                 )
-              : SizedBox()
+              : const SizedBox()
         ],
       ),
     );

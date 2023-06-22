@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, library_private_types_in_public_api
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -34,7 +34,7 @@ class _AvatarSelectionWidgetState extends State<AvatarSelectionWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xffE5E5E5),
+      color: const Color(0xffE5E5E5),
       child: Column(
         children: [
           const Text(
@@ -53,21 +53,21 @@ class _AvatarSelectionWidgetState extends State<AvatarSelectionWidget> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: Text('Select the source photos'),
+                    title: const Text('Select the source photos'),
                     actions: [
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                           getImage(ImageSource.gallery);
                         },
-                        child: Text('Photos'),
+                        child: const Text('Photos'),
                       ),
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                           getImage(ImageSource.camera);
                         },
-                        child: Text('Camera'),
+                        child: const Text('Camera'),
                       ),
                     ],
                   );
@@ -88,7 +88,7 @@ class _AvatarSelectionWidgetState extends State<AvatarSelectionWidget> {
                     : null,
               ),
               child: selectedImage == null
-                  ? Icon(
+                  ? const Icon(
                       Icons.camera_alt,
                       color: Colors.white,
                       size: 60,

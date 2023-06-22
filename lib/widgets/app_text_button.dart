@@ -10,11 +10,13 @@ class AppTextButton extends StatelessWidget {
     this.onPressed,
     required this.title,
     this.buttonColor,
+    this.isBorder = false,
   }) : super(key: key);
 
   final Function? onPressed;
   final String title;
   final Color? buttonColor;
+  final bool isBorder;
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +29,17 @@ class AppTextButton extends StatelessWidget {
             : null,
         child: Container(
           width: double.infinity,
+          //
           decoration: BoxDecoration(
             color: buttonColor != null ? buttonColor! : Colors.white,
-            border: buttonColor != null
+            border: !isBorder
                 ? Border.all(
                     width: 1,
                     color: Colors.transparent,
                   )
                 : Border.all(
                     width: 1,
-                    color: Color(0xff808080),
+                    color: const Color(0xff808080),
                   ),
             borderRadius: BorderRadius.circular(12),
           ),

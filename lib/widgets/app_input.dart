@@ -9,9 +9,12 @@ class AppInput extends StatelessWidget {
     this.hintText,
     this.textInputType,
     this.onChange,
+    this.validator,
   }) : super(key: key);
 
   final TextEditingController? textEditingController;
+  final String? Function(String?)?
+      validator; // VALIDATOR https://docs.flutter.dev/cookbook/forms/validation
   final bool isPass;
   final String? hintText;
   final TextInputType? textInputType;
@@ -19,8 +22,10 @@ class AppInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: textEditingController,
+      validator:
+          validator, // VALIDATOR https://docs.flutter.dev/cookbook/forms/validation
       onChanged: onChange != null
           ? (value) {
               onChange!(value);

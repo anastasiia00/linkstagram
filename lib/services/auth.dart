@@ -1,4 +1,5 @@
-import 'dart:math';
+// ignore_for_file: unnecessary_import, avoid_print
+
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,7 +22,13 @@ class AuthMethods {
     debugPrint("signUp AuthMethods");
     try {
       UserCredential userData = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
+
+      print(email);
+      print(password);
+      print(userData);
 
       String? avatar;
 

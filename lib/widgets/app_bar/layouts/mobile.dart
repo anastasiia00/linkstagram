@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+part of '../app_bar.dart';
 
-class AppBarWidget extends StatelessWidget {
-  AppBarWidget({
-    Key? key,
+class _Mobile extends StatelessWidget {
+  const _Mobile({
+    super.key,
     required this.isProfile,
   });
 
@@ -29,16 +29,21 @@ class AppBarWidget extends StatelessWidget {
       leadingWidth: 200,
       actions: [
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            isProfile
+                ? context.router.pushNamed('/home')
+                : context.router.pushNamed('/profile');
+          },
           child: Container(
+            clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               border: Border.all(
                 width: 1,
-                color: Color(0xffC9CAD1),
+                color: const Color(0xffC9CAD1),
               ),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: isProfile != false
+            child: isProfile
                 ? const Padding(
                     padding: EdgeInsets.symmetric(
                       vertical: 10,
@@ -53,7 +58,11 @@ class AppBarWidget extends StatelessWidget {
                     ),
                   )
                 : Image.network(
-                    'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'),
+                    'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg',
+                    width: 40,
+                    height: 40,
+                    fit: BoxFit.cover,
+                  ),
           ),
         ),
       ],

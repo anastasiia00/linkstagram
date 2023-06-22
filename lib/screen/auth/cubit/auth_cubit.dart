@@ -1,41 +1,28 @@
+// ignore_for_file: depend_on_referenced_packages
+
+import 'package:auto_route/auto_route.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:linkstagram/models/app_response.dart';
-import 'package:linkstagram/screen/home/home_view.dart';
 import 'package:linkstagram/services/auth.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(AuthState());
+  AuthCubit() : super(AuthStateInitial());
 
   final AuthMethods service = AuthMethods();
 
-  void emailUpdate(String email) {
-    print('emailUpdate AuthCubit');
-
-    emit(
-      state.copyWith(
-        email: email,
-      ),
-    );
-  }
-
-  void passwordUpdate(String password) {
-    print('passwordUpdate AuthCubit');
-    emit(
-      state.copyWith(
-        password: password,
-      ),
-    );
-  }
-
-  Future<void> logIn(BuildContext context) async {
-    emit(state.copyWith(isLoading: true));
+  Future<void> logIn({
+    required BuildContext context,
+    required String email,
+    required String password,
+  }) async {
+    emit(AuthStateProcessing());
     final AppResponse result = await service.loginUser(
-      email: state.email,
-      password: state.password,
+      email: email,
+      password: password,
     );
     if (result.success == false) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -46,13 +33,9 @@ class AuthCubit extends Cubit<AuthState> {
       );
     }
     if (result.success) {
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => HomeView(),
-        ),
-        (Route<dynamic> route) => false,
-      );
+      context.router.pushNamed('/home');
+      return;
     }
-    emit(state.copyWith(isLoading: false));
+    emit(AuthStateProcessing());
   }
 }
