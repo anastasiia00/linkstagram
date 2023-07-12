@@ -1,8 +1,8 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
-class Post extends StatefulWidget {
-  const Post({
+class PostWidget extends StatefulWidget {
+  const PostWidget({
     Key? key,
     required this.name,
     required this.time,
@@ -22,10 +22,10 @@ class Post extends StatefulWidget {
   final int? commentsCount;
 
   @override
-  State<Post> createState() => _PostState();
+  State<PostWidget> createState() => _PostState();
 }
 
-class _PostState extends State<Post> {
+class _PostState extends State<PostWidget> {
   bool isLiked = false;
   @override
   Widget build(BuildContext context) {

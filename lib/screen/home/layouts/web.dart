@@ -1,11 +1,48 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:linkstagram/widgets/app_bar/app_bar.dart';
 import 'package:linkstagram/widgets/post.dart';
 import 'package:linkstagram/widgets/profile_info/layouts/web.dart';
 import 'package:linkstagram/widgets/story.dart';
 
-class ProfileWebLayout extends StatelessWidget {
-  const ProfileWebLayout({super.key});
+class HomeWebLayout extends StatefulWidget {
+  HomeWebLayout({super.key});
+
+  @override
+  State<HomeWebLayout> createState() => _HomeWebLayoutState();
+}
+
+class _HomeWebLayoutState extends State<HomeWebLayout> {
+  String name = '';
+
+  String username = '';
+
+  List followers = [];
+
+  List following = [];
+
+  String? avatar = '';
+
+  @override
+  void initState() {
+    super.initState();
+    getDate();
+  }
+
+  void getDate() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    print(snap.data());
+
+    setState(() {
+      name = (snap.data() as Map<String, dynamic>)['name']['username']
+          ['followers']['following']['avatar'];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +75,7 @@ class ProfileWebLayout extends StatelessWidget {
                           left: 16,
                           right: 16,
                         ),
-                        child: Post(
+                        child: PostWidget(
                           name: 'Nettie Fernandez',
                           time: 'Just now',
                           avatarProfile:
@@ -64,7 +101,13 @@ class ProfileWebLayout extends StatelessWidget {
             padding: EdgeInsets.only(
               top: 32,
             ),
-            child: ProfileInfoWebLayout(),
+            child: ProfileInfoWebLayout(
+              name: name,
+              username: username,
+              followers: [followers],
+              following: [following],
+              avatar: avatar,
+            ),
           ),
         ],
       ),

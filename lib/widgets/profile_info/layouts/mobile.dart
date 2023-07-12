@@ -8,15 +8,18 @@ import 'package:linkstagram/widgets/follow_info.dart';
 class ProfileInfoMobileLayout extends StatelessWidget {
   const ProfileInfoMobileLayout({
     super.key,
+    required this.name,
   });
+
+  final String name;
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    return SizedBox(
       width: 400,
       child: Column(
         children: [
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               FollowInfo(
@@ -40,16 +43,16 @@ class ProfileInfoMobileLayout extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 18,
           ),
           AccountInfoWidget(
-            name: 'Alexandr Sokolov',
+            name: name,
             profession: 'Photographer',
             description:
                 'Like to travel and shoot cinematic and b/w photos Tools - Capture One for Raw',
           ),
-          SizedBox(
+          const SizedBox(
             height: 18,
           ),
           Row(
@@ -57,15 +60,21 @@ class ProfileInfoMobileLayout extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: AppTextButton(
+                  onPressed: () {
+                    context.router.pushNamed('/editProfile');
+                  },
                   title: 'Edit profile',
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 12,
               ),
               Expanded(
                 flex: 1,
                 child: AppTextButton(
+                  onPressed: () {
+                    context.router.pushNamed('/addPost');
+                  },
                   title: 'New post',
                   buttonColor: Color(0xff0087FF),
                 ),

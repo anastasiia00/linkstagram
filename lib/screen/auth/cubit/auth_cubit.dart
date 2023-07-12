@@ -4,15 +4,17 @@ import 'package:auto_route/auto_route.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:linkstagram/blocs/cubit/app_cubit.dart';
 import 'package:linkstagram/models/app_response.dart';
 import 'package:linkstagram/services/auth.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(AuthStateInitial());
+  AuthCubit({required this.appCubit}) : super(AuthStateInitial());
 
   final AuthMethods service = AuthMethods();
+  final AppCubit appCubit;
 
   Future<void> logIn({
     required BuildContext context,
@@ -24,6 +26,7 @@ class AuthCubit extends Cubit<AuthState> {
       email: email,
       password: password,
     );
+
     if (result.success == false) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -33,6 +36,7 @@ class AuthCubit extends Cubit<AuthState> {
       );
     }
     if (result.success) {
+      await appCubit.refreshuser();
       context.router.pushNamed('/home');
       return;
     }

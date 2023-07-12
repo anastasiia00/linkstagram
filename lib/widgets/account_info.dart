@@ -31,18 +31,13 @@ class AccountInfoWidget extends StatelessWidget {
               ),
               profession != null
                   ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const SizedBox(
-                          width: 8,
-                        ),
                         const Text(
                           ' - ',
                           style: TextStyle(
                             color: Colors.black38,
                           ),
-                        ),
-                        const SizedBox(
-                          width: 8,
                         ),
                         Text(
                           profession!,

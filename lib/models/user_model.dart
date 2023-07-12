@@ -1,24 +1,28 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class User {
   final String uid;
   final String email;
-  final String password;
+  final String? password;
   final String name;
   final String username;
   final List followers;
   final List following;
+  final String? avatar;
+
   User({
     required this.uid,
     required this.email,
-    required this.password,
+    this.password,
     required this.name,
     required this.username,
     required this.followers,
     required this.following,
+    this.avatar,
   });
 
   User copyWith({
@@ -29,6 +33,7 @@ class User {
     String? username,
     List? followers,
     List? following,
+    String? avatar,
   }) {
     return User(
       uid: uid ?? this.uid,
@@ -38,6 +43,7 @@ class User {
       username: username ?? this.username,
       followers: followers ?? this.followers,
       following: following ?? this.following,
+      avatar: avatar ?? this.avatar,
     );
   }
 
@@ -50,20 +56,21 @@ class User {
       'username': username,
       'followers': followers,
       'following': following,
+      'avatar': avatar,
     };
   }
 
-  factory User.fromMap(Map<String, dynamic> map) {
+  factory User.fromSnap(DocumentSnapshot snap) {
+    var snapshot = snap.data() as Map<String, dynamic>;
+
     return User(
-      uid: map['uid'] as String,
-      email: map['email'] as String,
-      password: map['password'] as String,
-      name: map['name'] as String,
-      username: map['username'] as String,
-      followers: List.from((map['followers'] as List)),
-      following: List.from(
-        (map['following'] as List),
-      ),
+      uid: snapshot["uid"],
+      email: snapshot["email"],
+      name: snapshot["name"],
+      username: snapshot["username"],
+      followers: snapshot["followers"],
+      following: snapshot["following"],
+      avatar: snapshot["avatar"],
     );
   }
 
@@ -76,17 +83,40 @@ class User {
       username: map['username'] ?? '',
       followers: map['followers'] ?? [],
       following: map['following'] ?? [],
+      avatar: map['avatar'] ?? '',
     );
   }
 
-  String toJson() => json.encode(toMap());
+  factory User.fromMap(Map<String, dynamic> map) {
+    return User(
+      uid: map['uid'] as String,
+      email: map['email'] as String,
+      password: map['password'] as String,
+      name: map['name'] as String,
+      username: map['username'] as String,
+      followers: List.from((map['followers'] as List)),
+      following: List.from((map['following'] as List)),
+      avatar: map['avatar'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "uid": uid,
+        "email": email,
+        "password": password,
+        "name": name,
+        "username": username,
+        "avatar": avatar,
+        "followers": followers,
+        "following": following,
+      };
 
   factory User.fromJson(String source) =>
       User.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'User(uid: $uid, email: $email, password: $password, name: $name, username: $username, followers: $followers, following: $following)';
+    return 'User(uid: $uid, email: $email, password: $password, name: $name, username: $username, followers: $followers, following: $following, avatar: $avatar)';
   }
 
   @override
@@ -99,7 +129,8 @@ class User {
         other.name == name &&
         other.username == username &&
         listEquals(other.followers, followers) &&
-        listEquals(other.following, following);
+        listEquals(other.following, following) &&
+        other.avatar == avatar;
   }
 
   @override
@@ -110,6 +141,7 @@ class User {
         name.hashCode ^
         username.hashCode ^
         followers.hashCode ^
-        following.hashCode;
+        following.hashCode ^
+        avatar.hashCode;
   }
 }

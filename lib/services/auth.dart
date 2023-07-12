@@ -7,10 +7,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:linkstagram/models/app_response.dart';
 import 'package:linkstagram/services/storage_methods.dart';
+import 'package:linkstagram/models/user_model.dart' as model;
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+
+  Future<model.User> getUserDetails() async {
+    User currentUser = _auth.currentUser!;
+
+    DocumentSnapshot snap =
+        await _firebaseFirestore.collection('users').doc(currentUser.uid).get();
+
+    return model.User.fromSnap(snap);
+  }
 
   Future<AppResponse> signUp({
     required String email,
@@ -36,6 +46,22 @@ class AuthMethods {
         avatar =
             await StorageMethods().uploadImageToStorage('avatar', file, false);
       }
+
+      model.User user = model.User(
+        uid: userData.user!.uid,
+        email: email,
+        password: password,
+        name: name,
+        avatar: avatar ?? '',
+        username: username,
+        followers: [],
+        following: [],
+      );
+
+      await _firebaseFirestore
+          .collection('users')
+          .doc(userData.user!.uid)
+          .set(user.toJson());
 
       await _firebaseFirestore.collection('users').doc(userData.user!.uid).set({
         'email': email,

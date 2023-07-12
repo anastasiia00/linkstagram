@@ -1,10 +1,22 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:linkstagram/services/firestore_methods.dart';
+import 'package:linkstagram/utils/helper.dart';
 import 'package:linkstagram/widgets/app_bar/app_bar.dart';
 import 'package:linkstagram/widgets/post.dart';
 import 'package:linkstagram/widgets/story.dart';
 
-class ProfileMobileLayout extends StatelessWidget {
-  const ProfileMobileLayout({super.key});
+class HomeMobileLayout extends StatefulWidget {
+  const HomeMobileLayout({super.key});
+
+  @override
+  State<HomeMobileLayout> createState() => _HomeMobileLayoutState();
+}
+
+class _HomeMobileLayoutState extends State<HomeMobileLayout> {
+  Uint8List? _file;
+  bool isLoading = false;
+  final TextEditingController _descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +44,7 @@ class ProfileMobileLayout extends StatelessWidget {
                     left: 16,
                     right: 16,
                   ),
-                  child: Post(
+                  child: PostWidget(
                     name: 'Nettie Fernandez',
                     time: 'Just now',
                     avatarProfile:
@@ -51,5 +63,50 @@ class ProfileMobileLayout extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void postImage(String uid, String username, String profImage) async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      String res = await FirestoreMethods().uploadPost(
+        _descriptionController.text,
+        _file!,
+        uid,
+        username,
+        profImage,
+      );
+      if (res == "success") {
+        setState(() {
+          isLoading = false;
+        });
+        if (context.mounted) {
+          showSnackBar(
+            context,
+            'Posted!',
+          );
+        }
+        clearImage();
+      } else {
+        if (context.mounted) {
+          showSnackBar(context, res);
+        }
+      }
+    } catch (err) {
+      setState(() {
+        isLoading = false;
+      });
+      showSnackBar(
+        context,
+        err.toString(),
+      );
+    }
+  }
+
+  void clearImage() {
+    setState(() {
+      _file = null;
+    });
   }
 }

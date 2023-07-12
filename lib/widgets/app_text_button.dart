@@ -20,8 +20,11 @@ class AppTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return Material(
+      color: buttonColor != null ? buttonColor! : Colors.white,
+      borderRadius: BorderRadius.circular(12),
       child: InkWell(
+        borderRadius: BorderRadius.circular(12),
         onTap: onPressed != null
             ? () {
                 onPressed!();
@@ -29,9 +32,7 @@ class AppTextButton extends StatelessWidget {
             : null,
         child: Container(
           width: double.infinity,
-          //
           decoration: BoxDecoration(
-            color: buttonColor != null ? buttonColor! : Colors.white,
             border: !isBorder
                 ? Border.all(
                     width: 1,

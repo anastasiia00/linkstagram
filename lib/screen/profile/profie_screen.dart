@@ -10,7 +10,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveLayout(
+    return const ResponsiveLayout(
       webScreenLayout: ProfileWebLayout(),
       mobileScreenLayout: ProfileMobileLayout(),
     );
